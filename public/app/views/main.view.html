@@ -1,0 +1,30 @@
+<div id="main">
+	<md-content flex layout="column" layout-align="center center" class="full-height-min main-content">
+		<h1 class="white-text md-display-2 weight-300">Barcode Generator</h1>
+		<md-card>
+			<md-card-content flex>
+				<form name="detailsForm" novalidate flex class="form">
+					<md-input-container flex>
+						<label>Format</label>
+						<input type="text" name="Format" ng-model="barcode.format" required>
+						<div ng-messages="detailsForm.Format.$error" ng-if="detailsForm.Format.$touched">
+							<div ng-messages-include="/app/views/validation-message.html"></div>
+						</div>
+					</md-input-container>
+					<md-input-container flex>
+						<label>Quantity</label>
+						<input type="number" name="Quantity" ng-model="barcode.quantity" required min="1">
+						<div ng-messages="detailsForm.Quantity.$error" ng-if="detailsForm.Quantity.$touched">
+							<div ng-messages-include="/app/views/validation-message.html"></div>
+						</div>
+					</md-input-container>
+					<div layout="row" layout-align="end center">
+						<md-button class="md-primary md-raised" ng-click="submit()">
+							<span class="white-text">Generate</span>
+						</md-button>
+					</div>
+				</form>
+			</md-card-content>
+		</md-card>
+	</md-content>
+</div>
