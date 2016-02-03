@@ -4,20 +4,70 @@
 		<md-card>
 			<md-card-content flex>
 				<form name="detailsForm" novalidate flex class="form">
-					<md-input-container flex>
+					<md-radio-group ng-model="barcode.category"layout="row" ng-change="checkMax()">
+				    	<md-radio-button class="md-primary" value="assets" flex>Assets</md-radio-button>
+				    	<md-radio-button class="md-primary" value="workstation" flex>Work Station</md-radio-button>
+				    </md-radio-group>
+				    
+				    <!-- Format -->
+					<md-input-container flex ng-if="barcode.category=='assets'">
 						<label>Format</label>
 						<input type="text" name="Format" ng-model="barcode.format" required>
 						<div ng-messages="detailsForm.Format.$error" ng-if="detailsForm.Format.$touched">
 							<div ng-messages-include="/app/views/validation-message.html"></div>
 						</div>
 					</md-input-container>
-					<md-input-container flex>
-						<label>Quantity</label>
-						<input type="number" name="Quantity" ng-model="barcode.quantity" required min="1">
-						<div ng-messages="detailsForm.Quantity.$error" ng-if="detailsForm.Quantity.$touched">
-							<div ng-messages-include="/app/views/validation-message.html"></div>
-						</div>
-					</md-input-container>
+					
+					<!-- Workstations -->
+					<div ng-if="barcode.category=='workstation'" layout="row">
+						<!-- Floor -->
+						<md-input-container flex>
+							<label>Floor</label>
+							<md-select name="Floor" ng-model="barcode.floor" required>
+								<md-option ng-repeat="floor in floors" value="{{ floor }}">{{ floor }}</md-option>
+							</md-select>
+							<div ng-messages="detailsForm.Floor.$error" ng-if="detailsForm.Floor.$touched">
+								<div ng-messages-include="/app/views/validation-message.html"></div>
+							</div>
+						</md-input-container>
+						<!-- Division -->
+						<md-input-container flex>
+							<label>Division</label>
+							<md-select name="Division" ng-model="barcode.division" required>
+								<md-option ng-repeat="division in divisions" value="{{ division }}">{{ division }}</md-option>
+							</md-select>
+							<div ng-messages="detailsForm.Division.$error" ng-if="detailsForm.Division.$touched">
+								<div ng-messages-include="/app/views/validation-message.html"></div>
+							</div>
+						</md-input-container>
+						<!-- Type -->
+						<md-input-container flex>
+							<label>Type</label>
+							<md-select name="Type" ng-model="barcode.type" required>
+								<md-option ng-repeat="type in types" value="{{ type.value }}">{{ type.name }}</md-option>
+							</md-select>
+							<div ng-messages="detailsForm.Type.$error" ng-if="detailsForm.Type.$touched">
+								<div ng-messages-include="/app/views/validation-message.html"></div>
+							</div>
+						</md-input-container>	
+					</div>
+
+					<div layout="row">
+						<md-input-container flex>
+							<label>Starting Point</label>
+							<input type="number" name="StartingPoint" ng-model="barcode.starting_point" required min="1">
+							<div ng-messages="detailsForm.StartingPoint.$error" ng-if="detailsForm.StartingPoint.$touched">
+								<div ng-messages-include="/app/views/validation-message.html"></div>
+							</div>
+						</md-input-container>
+						<md-input-container flex>
+							<label>Quantity</label>
+							<input type="number" name="Quantity" ng-model="barcode.quantity" required min="1" max="{{max}}">
+							<div ng-messages="detailsForm.Quantity.$error" ng-if="detailsForm.Quantity.$touched">
+								<div ng-messages-include="/app/views/validation-message.html"></div>
+							</div>
+						</md-input-container>
+					</div>
 					<div layout="row" layout-align="end center">
 						<md-button class="md-primary md-raised" ng-click="submit()">
 							<span class="white-text">Generate</span>

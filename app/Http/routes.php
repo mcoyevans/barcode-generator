@@ -15,7 +15,8 @@ Route::get('/', function () {
     return view('app');
 });
 
-Route::get('/barcode-download/{format}/quantity/{quantity}', 'BarcodeController@download');
+Route::get('/barcode-assets/{format}/starting-point/{starting_point}/quantity/{quantity}', 'BarcodeController@assets');
+Route::get('/barcode-work-station/{floor}/division/{division}/type/{type}/starting-point/{starting_point}/quantity/{quantity}', 'BarcodeController@workStation');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
